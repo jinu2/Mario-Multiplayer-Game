@@ -9,6 +9,7 @@ class Player():
         IMAGE = pygame.image.load("mario.png")
         self.rect = IMAGE.get_rect()
         self.vel = 3
+        self.score = 0
 
     def draw1(self, win):
         IMAGE = pygame.image.load("mario.png")  # or .convert_alpha()
@@ -19,13 +20,14 @@ class Player():
 
         # pygame.draw.rect(win, self.color, self.rect)
 
-    # def draw2(self,win):
-    #     IMAGE = pygame.image.load("dog.png")  # or .convert_alpha()
+     def draw2(self,win):
+         IMAGE = pygame.image.load("luigi.png")  # or .convert_alpha()
     # #     # Create a rect with the size of the image.
-    #     print(IMAGE.get_rect())
-    #     self.rect.center = (380, 450)
-    #     win.blit(IMAGE, self.rect)
-    #     # pygame.draw.rect(win, self.color, self.rect)
+         IMAGE = pygame.transform.scale(IMAGE, (40,59))
+         rect = IMAGE.get_rect()
+         rect.center = (self.x, self.y)
+         win.blit(IMAGE, rect)
+         # pygame.draw.rect(win, self.color, self.rect)
 
 
     def move(self):
@@ -51,7 +53,9 @@ class Player():
         self.update()
 
     def update(self):
-
-        rect  = (self.x, self.y)
+        self.rect  = (self.x, self.y)
+        if self.y < 40:
+            self.y = 700
+            self.score += 1
 
 
