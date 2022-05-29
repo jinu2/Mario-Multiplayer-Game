@@ -1,6 +1,7 @@
 import pygame
 from network import Network
-
+from enemy import Enemy_Manager
+from player import Player
 pygame.init()
 pygame.font.init()
 width = 800
@@ -13,6 +14,18 @@ img = pygame.image.load("bg.gif")
 img.convert()
 rect = img.get_rect()
 rect.center = width // 2, height // 2
+
+player1_image = pygame.image.load("mario.png")
+player1_image = pygame.transform.scale(player1_image, (40,59))
+player1_rect = player1_image.get_rect()
+
+player2_image = pygame.image.load("luigi.png")
+player2_image = pygame.transform.scale(player2_image, (40,59))
+#player2_rect = player2_image.get_rect()
+
+enemy_image = pygame.image.load("enemy.png")
+enemy_image = pygame.transform.scale(enemy_image, (40, 59))
+
 moving = False
 level = 1
 
@@ -23,10 +36,11 @@ pygame.display.set_caption("Client")
 # dogImg = pygame.image.load("dog.png").convert()
 
 
-def redrawWindow(win, player, player2):
+def redrawWindow(win, player, player2, enemy):
     win.blit(img, rect)
-    player.draw1(win)
-    player2.draw2(win)
+    player.draw(win, player1_image, player1_image.get_rect())
+    player2.draw(win, player2_image, player2_image.get_rect())
+    enemy.draw(win, enemy_image, enemy_image.get_rect())
 
     font_colour = (0, 0, 0)
     if player.score == 3:
@@ -46,11 +60,18 @@ def redrawWindow(win, player, player2):
     win.blit(text2, (650, 50))
     pygame.display.flip()
 
+#p = Player(340, 700, 50, 50)#, (255, 0, 0))
+#p2 = Player(480, 700, 50, 50)
 
 def main():
     run = True
     n = Network()
-    p = n.getP()
+    n.getIP()
+    p = n.connect()
+    #p = n.getP()
+    enemy = Enemy_Manager(50, 50, width, height)
+    enemy.create_car_lanes()
+    pygame.init()
     clock = pygame.time.Clock()
 
     while run:
@@ -60,9 +81,13 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 run = False
-
+        enemy.update_cars()
         p.move()
-        redrawWindow(win, p, p2)
+        if enemy.detect_collision(p):
+            p.go_to_start()
+            p2.score += 1
+
+        redrawWindow(win, p, p2, enemy)
 
 
 main()

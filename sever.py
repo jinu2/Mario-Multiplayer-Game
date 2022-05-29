@@ -5,8 +5,11 @@ from player import Player
 import pickle
 
 
-server = "10.76.145.158"
-port = 2223
+hostname = socket.gethostname()
+IPAddr = socket.gethostbyname(hostname)
+print(IPAddr)
+server = IPAddr
+port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -27,8 +30,8 @@ print("Waiting for a connection, Server Started")
 
 #players = [PlayerCharacter("cat (1).png", 480, 700, 50, 50), PlayerCharacter("cat (1).png", 380, 700, 50, 50)]
 #players = [Player(480, 700, 50, 50), Player( 380, 700, 50, 50)]
-p1 = Player(340, 700, 50, 50, (255, 0, 0))
-p2 = Player(480, 700, 50, 50, (0, 0, 255))
+p1 = Player(340, 700, 50, 50)#, (255, 0, 0))
+p2 = Player(480, 700, 50, 50)#, (0, 0, 255))
 
 players = [p1, p2]
 #enemies = [NonPlayerCharacter("dog.png", 80, 600, 50, 50), NonPlayerCharacter("dog.png", 80, 400, 50, 50), NonPlayerCharacter("dog.png", 20, 200, 50, 50)]
