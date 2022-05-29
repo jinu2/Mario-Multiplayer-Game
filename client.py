@@ -44,6 +44,14 @@ def redrawWindow(win, player, player2):
     text2 = font2.render(str(player2.score), True, font_colour)
     win.blit(text1, (150, 50))
     win.blit(text2, (650, 50))
+        if player.y < 40:
+        player.y = 700
+        player2.y = 700
+        player.score += 1
+    elif player2.y < 40:
+        player.y = 700
+        player2.y = 700
+        player2.score += 1
     pygame.display.flip()
 
 
