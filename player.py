@@ -54,8 +54,5 @@ class Player():
 
     def update(self):
         self.rect  = (self.x, self.y)
-        if self.y < 40:
-            self.y = 700
-            self.score += 1
 
 
